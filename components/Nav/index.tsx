@@ -17,6 +17,7 @@ import Sidebar from "./sidebar";
 import { useAtom } from "jotai";
 import { ImageFiles, isGenerateKey, ImageData } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
 const axios = require('axios');
 
 const APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
@@ -45,6 +46,8 @@ export default function Navbar() {
     const [isloading, setLoading] = useState<any>(false);
     const [imgdata, setData] = useAtom<ImgData[]>(ImageData);
     const [isGenerate, setGenerate] = useAtom<any>(isGenerateKey);
+    const pathname = usePathname();
+    const currentPath = pathname.split("/")?.[1]
 
     let api_endpoint = "https://api.openai.com/v1/chat/completions";
     let headers = {
@@ -102,15 +105,14 @@ export default function Navbar() {
 
     // Generate Keywards
     const generateKey = async () => {
-        console.log("Click!");
         setLoading(true);
 
-        let updateData:any = [];
+        let updateData: any = [];
 
         files.forEach(async (imageFile: File) => {
             // Resize the image to 510x510 pixels
             const base64_image = await encodeImage(imageFile);
-            var image_data:any = {};
+            var image_data: any = {};
             image_data.filename = imageFile.name;
 
             let payload = {
@@ -140,15 +142,14 @@ export default function Navbar() {
                 .then((response: any) => {
                     let result = response.data.choices[0].message.content;
                     let result_entries = result.split(", ");
-                    
+
                     image_data.title = result_entries[0];
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
-                    
+
                     if (files.length == updateData.length) {
                         setGenerate(true);
                         setLoading(false);
-                        console.log("--------------Fire!");
                     }
                 })
                 .catch(console.error)
@@ -189,7 +190,7 @@ export default function Navbar() {
                     </div>
                 </div>
                 <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6 gap-6 flex flex-col">
-                    <Sidebar defaultSelectedKey="home" items={items} />
+                    <Sidebar defaultSelectedKey="home" items={items} selectedKeys={[currentPath]} />
                     <Card className="overflow-visible" shadow="sm">
                         <CardBody className="items-center py-5 text-center gap-6">
                             <Button className="px-10 shadow-md" color="primary" radius="full" variant="shadow" onClick={generateKey} isDisabled={isloading || isGenerate}>

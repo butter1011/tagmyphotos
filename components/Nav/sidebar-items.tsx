@@ -11,7 +11,7 @@ import TeamAvatar from "./team-avatar";
 export const items: SidebarItem[] = [
   {
     key: "home",
-    href: "#",
+    href: "/home",
     icon: "solar:home-2-linear",
     title: "Home",
   },
@@ -74,8 +74,8 @@ export const items: SidebarItem[] = [
   //   title: "Expenses",
   // },
   {
-    key: "settings",
-    href: "#",
+    key: "setting",
+    href: "/setting",
     icon: "solar:settings-outline",
     title: "Settings",
   },
