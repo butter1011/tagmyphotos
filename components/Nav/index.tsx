@@ -188,7 +188,7 @@ export default function Navbar() {
                         <p className="text-small font-medium text-default-600">{user?.name ? user?.name : user?.email}</p>
                     </div>
                 </div>
-                <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6">
+                <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6 gap-6 flex flex-col">
                     <Sidebar defaultSelectedKey="home" items={items} />
                     <Card className="overflow-visible" shadow="sm">
                         <CardBody className="items-center py-5 text-center gap-6">
