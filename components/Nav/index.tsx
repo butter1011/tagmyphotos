@@ -15,7 +15,7 @@ import { verifyJwtToken } from "../../libs/auth";
 import Sidebar from "./sidebar";
 
 import { useAtom } from "jotai";
-import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom, DownloadModalAtom } from "../Jotai/atoms";
+import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom, DownloadModalAtom, GeneratingModalAtom } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { ToastContext } from "../Contexts/ToastContext";
@@ -59,6 +59,7 @@ export default function Navbar() {
     const [model, setModel] = useAtom<any>(OpenAIModalAtom);
     const [warning, setWarning] = useState<any>(false);
     const [isDownloadOpen, setDwonloadOpen] = useAtom<any>(DownloadModalAtom);
+    const [generatingModalOpen, setGeneratingModal] = useAtom<any>(GeneratingModalAtom);
 
     const descryptKey = (key: any) => {
         var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
@@ -106,7 +107,7 @@ export default function Navbar() {
             "Authorization": "Bearer " + openAPIKey,
         };
 
-        setLoading(true);
+        setGeneratingModal(true);
 
         let updateData: any = [];
 
@@ -150,17 +151,21 @@ export default function Navbar() {
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
-                        setLoading(false);
+                        setGeneratingModal(false);
                     }
                 })
                 .catch((error: any) => {
-                    toast.error("Your API Key is invalid");
-                    setLoading(false);
+                    setGeneratingModal(false);
                 })
         }
         );
 
-        setData(updateData);
+        if (updateData.length > 0) {
+            setData(updateData);
+            return;
+        }
+        
+        toast.error("Your API Key is invalid");
     }
 
     const handleSignOut = async () => {
@@ -215,15 +220,13 @@ export default function Navbar() {
                     <Card className="overflow-visible" shadow="sm">
                         <CardBody className="items-center py-5 text-center gap-6">
                             <Button className="px-10 shadow-md" color="primary" radius="full" variant="shadow" onClick={generateKey} isDisabled={isloading || isGenerate}>
-                                {
-                                    isloading ? <><Spinner color="white" className="p-1" /></> : "Generate Keyword"
-                                }
+                                Generate Keyword
                             </Button>
                             {
                                 warning &&
                                 <span className="text-red-600 text-[16px] underline">Please enter API Key first</span>
                             }
-                            <Button className="px-10 shadow-md" color="secondary" radius="full" variant="shadow" onClick={() => setDwonloadOpen(true)} >
+                            <Button className="px-10 shadow-md" color="secondary" radius="full" variant="shadow" onClick={() => setDwonloadOpen(true)} isDisabled={!isGenerate}>
                                 🚀 Download CSV
                             </Button>
                         </CardBody>
