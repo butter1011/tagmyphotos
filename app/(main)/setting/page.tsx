@@ -11,7 +11,7 @@ import { Spinner } from "@nextui-org/react";
 import { ToastContext } from "@/components/Contexts/ToastContext";
 import { UserInfo, OpenAPIKeyAtom, OpenAIModalAtom } from '@/components/Jotai/atoms';
 
-export const CustomRadio = (props: any) => {
+const CustomRadio = (props: any) => {
   const {
     Component,
     children,
