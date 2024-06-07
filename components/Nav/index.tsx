@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import { signOut } from "next-auth/react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import { useSession } from "next-auth/react";
 import Cookies from "universal-cookie";
 
@@ -18,6 +18,8 @@ import { useAtom } from "jotai";
 import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
+import { ToastContext } from "../Contexts/ToastContext";
+
 const CryptoJS = require("crypto-js");
 
 const secrect_key = process.env.NEXT_PUBLIC_OPENAI_SECRET_KEY;
@@ -44,6 +46,7 @@ interface ImgData {
 }
 
 export default function Navbar() {
+    const { toast } = useContext<any>(ToastContext);
     const { data: session } = useSession();
     const [files, setFiles] = useAtom<any>(ImageFiles);
     const [isloading, setLoading] = useState<any>(false);
@@ -54,6 +57,7 @@ export default function Navbar() {
     const [user, setLoggedIn] = useAtom<any>(UserInfo);
     const [openAPIKey, setOpenAPIKey] = useAtom<any>(OpenAPIKeyAtom);
     const [model, setModel] = useAtom<any>(OpenAIModalAtom);
+    const [warning, setWarning] = useState<any>(false);
 
     const descryptKey = (key: any) => {
         var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
@@ -107,7 +111,13 @@ export default function Navbar() {
 
     // Generate Keywards
     const generateKey = async () => {
-        if (!openAPIKey) {
+        if (openAPIKey === "" || openAPIKey === undefined) {
+            setWarning(true);
+            return;
+        }
+
+        if (files.length === 0) {
+            toast.error("Please select the image");
             return;
         }
 
@@ -213,10 +223,10 @@ export default function Navbar() {
                 </div>
                 <Spacer y={12} />
                 <div className="flex items-center gap-3 px-4">
-                    <Avatar isBordered size="sm" src={user?.image} />
-                    <div className="flex flex-col">
-                        <p className="text-small font-medium text-default-600">{user?.name ? user?.name : user?.email}</p>
+                    <div className="w-8">
+                        <Avatar isBordered size="sm" src={user?.image} />
                     </div>
+                    <p className="text-small font-medium text-default-600 overflow-hidden">{user?.name ? user?.name : user?.email}</p>
                 </div>
                 <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6 gap-6 flex flex-col">
                     <Sidebar defaultSelectedKey="home" items={items} selectedKeys={[currentPath]} />
@@ -227,6 +237,10 @@ export default function Navbar() {
                                     isloading ? <><Spinner color="white" className="p-1" /></> : "Generate Keyword"
                                 }
                             </Button>
+                            {
+                                warning &&
+                                <span className="text-red-600 text-[16px] underline">Please enter API Key first</span>
+                            }
                             <Button className="px-10 shadow-md" color="secondary" radius="full" variant="shadow" onClick={generateCSV} isDisabled={!isGenerate}>
                                 🚀 Download CSV
                             </Button>
