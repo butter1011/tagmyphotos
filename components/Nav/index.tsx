@@ -153,7 +153,10 @@ export default function Navbar() {
                         setLoading(false);
                     }
                 })
-                .catch(console.error)
+                .catch((error: any) => {
+                    toast.error("Your API Key is invalid");
+                    setLoading(false);
+                })
         }
         );
 
