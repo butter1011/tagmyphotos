@@ -5,6 +5,8 @@ const UsersSchema = new Schema(
     email: { type: String, required: true },
     password: { type: String, required: false },
     image: { type: String, required: false },
+    key: { type: String, required: false },
+    model: { type: String, required: false },
   },
   { timestamps: true }
 );

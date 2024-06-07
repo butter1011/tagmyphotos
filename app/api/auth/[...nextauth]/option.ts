@@ -21,7 +21,6 @@ export const options: any = {
             const newUser = new Users({
               email: user.email,
               image: user.image,
-              role: "user",
             });
             await newUser.save();
             return true

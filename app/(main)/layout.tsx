@@ -13,13 +13,13 @@ export default function RootLayout({
   return (
     <>
       <NextUIProvider>
-        {/* <StoreProvider> */}
-          {/* <DevTools store={store} /> */}
+        <StoreProvider>
+          <DevTools store={store} />
           <div className="flex flex-row">
             <Navbar />
             {children}
           </div>
-        {/* </StoreProvider> */}
+        </StoreProvider>
       </NextUIProvider>
     </>
   );

@@ -1,10 +1,15 @@
 'use client'
-import React from 'react'
+import React, { useState, useContext } from 'react'
 
 import { Button, Input } from "@nextui-org/react";
 import { Divider, RadioGroup, Radio, useRadio, VisuallyHidden, cn } from "@nextui-org/react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import axios from 'axios';
+import { useAtom } from 'jotai';
+import { Spinner } from "@nextui-org/react";
+import { ToastContext } from "@/components/Contexts/ToastContext";
+import { UserInfo } from '@/components/Jotai/atoms';
 
 export const CustomRadio = (props: any) => {
   const {
@@ -46,14 +51,66 @@ export const CustomRadio = (props: any) => {
 };
 
 const settingPage = () => {
+  const { toast } = useContext<any>(ToastContext);
+  const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState(new Set(["text"]));
+  const [openAPIKey, setOpenAPIKey] = React.useState<any>("");
+  const [user, setUser] = useAtom(UserInfo);
+  const [model, setModel] = useState<any>(user?.model);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
+
+  const SaveData = async () => {
+    setLoading(true);
+    if (openAPIKey === "") {
+      toast.error("Please input the openAPI Key");
+      setLoading(false);
+      return;
+    }
+
+    await axios.post("/api/v2/user", user?.email).then((res:any) => {
+      if (res?.status === 200) {
+        setUser(res?.data?.user);
+      }
+    }).catch(() => {
+      toast.error("Internal Server error");
+      setLoading(false);
+      return;
+    })
+
+    const data = {
+      email: user?.email,
+      openAPIKey: openAPIKey,
+      model: model,
+    }
+
+    try {
+      const res = await axios.post("/api/v1/update", data);
+
+      if (res?.status === 200) {
+        toast.success("Successfully saved");
+        setUser(res?.data?.user);
+      } else {
+        toast.error("Internal Server error");
+      }
+
+      setLoading(false);
+      setOpenAPIKey("");
+    } catch (err) {
+      setOpenAPIKey("");
+      setLoading(false);
+      console.log(err)
+    }
+  }
+
+  const handleRadioChange = (value: string) => {
+    setModel(value);
+  };
 
   return (
     <>
@@ -78,29 +135,31 @@ const settingPage = () => {
               }
               type={isVisible ? "text" : "password"}
               className="w-2/3"
+              value={openAPIKey}
+              onChange={(e) => setOpenAPIKey(e.target.value)}
             />
-            <div className='flex flex-row gap-2'>
-              <Button color="secondary">
-                Edit
-              </Button>
-              <Button color="primary">
-                Save
-              </Button>
-            </div>
+            <Button color="secondary" onClick={() => SaveData()}>
+              {loading ? (
+                <Spinner color="white" size="sm" />
+              ) : (
+                "Save"
+              )}
+            </Button>
           </div>
 
           <Divider orientation='horizontal' className='m-4 w-full' />
 
           <div className='w-full p-4'>
             <RadioGroup label="GPT Model" defaultValue="gpt35">
-              <CustomRadio value="gpt35">
+              <CustomRadio value="gpt35" onChange={() => handleRadioChange('gpt35')}>
                 GPT 3.5
               </CustomRadio>
-              <CustomRadio value="gpt4">
+              <CustomRadio value="gpt4" onChange={() => handleRadioChange('gpt4')}>
                 GPT 4.0
               </CustomRadio>
               <CustomRadio
                 value="gpt4o"
+                onChange={() => handleRadioChange('gpt4o')}
               >
                 GPT 4o
               </CustomRadio>

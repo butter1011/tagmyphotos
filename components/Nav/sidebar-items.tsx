@@ -181,7 +181,7 @@ export const sectionItems: SidebarItem[] = [
       },
       {
         key: "settings",
-        href: "/settings",
+        href: "/setting",
         icon: "solar:settings-outline",
         title: "Settings",
       },

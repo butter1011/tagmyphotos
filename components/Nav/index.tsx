@@ -15,7 +15,7 @@ import { verifyJwtToken } from "../../libs/auth";
 import Sidebar from "./sidebar";
 
 import { useAtom } from "jotai";
-import { ImageFiles, isGenerateKey, ImageData } from "../Jotai/atoms";
+import { ImageFiles, isGenerateKey, ImageData, UserInfo } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 const axios = require('axios');
@@ -48,6 +48,7 @@ export default function Navbar() {
     const [isGenerate, setGenerate] = useAtom<any>(isGenerateKey);
     const pathname = usePathname();
     const currentPath = pathname.split("/")?.[1]
+    const [user, setLoggedIn] = useAtom<any>(UserInfo);
 
     let api_endpoint = "https://api.openai.com/v1/chat/completions";
     let headers = {
@@ -69,7 +70,6 @@ export default function Navbar() {
         return false;
     };
 
-    const [user, setLoggedIn] = useState<any>(false);
 
     // encode the image into Base64
     function encodeImage(image: File): Promise<string> {
@@ -195,7 +195,7 @@ export default function Navbar() {
                         <CardBody className="items-center py-5 text-center gap-6">
                             <Button className="px-10 shadow-md" color="primary" radius="full" variant="shadow" onClick={generateKey} isDisabled={isloading || isGenerate}>
                                 {
-                                    isloading ? <><Spinner color="white" className="p-1" /></> : "Generate Keyward"
+                                    isloading ? <><Spinner color="white" className="p-1" /></> : "Generate Keyword"
                                 }
                             </Button>
                             <Button className="px-10 shadow-md" color="secondary" radius="full" variant="shadow" onClick={generateCSV} isDisabled={!isGenerate}>
