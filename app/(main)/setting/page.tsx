@@ -107,7 +107,7 @@ const settingPage = () => {
     <>
       <div className='m-4 p-4 w-full flex flex-col justify-between border-1 rounded-2xl border-gray-400'>
         <div className='flex flex-col gap-2'>
-          <h1 className='text-2xl font-bold'>Custom Setting</h1>
+          <h1 className='text-2xl font-bold text-black'>Custom Setting</h1>
           <p className='text-sm text-gray-400'>
             Please input the openAPI Key and select the GPT model.
           </p>

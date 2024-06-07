@@ -128,7 +128,7 @@ export default function Navbar() {
             image_data.filename = imageFile.name;
 
             let payload = {
-                "model": { model },
+                "model": model,
                 "messages": [
                     {
                         "role": "user",
@@ -207,8 +207,8 @@ export default function Navbar() {
             <div className="relative flex h-full w-72 flex-1 flex-col border-r-small border-divider p-6">
                 <div className="flex items-center gap-4 px-2">
                     <div className="flex flex-col gap-2">
-                        <span className="text-small font-bold uppercase">Keyworder</span>
-                        <span className="text-small">Microstock Keywording Tool</span>
+                        <span className="text-small font-bold uppercase text-black">Keyworder</span>
+                        <span className="text-small text-gray-500">Microstock Keywording Tool</span>
                     </div>
                 </div>
                 <Spacer y={12} />

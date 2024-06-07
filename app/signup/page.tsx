@@ -126,7 +126,7 @@ export default function Component() {
         <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
           <Input
             isRequired
-            className="dark:text-white text-black"
+            className="text-black"
             label="Email Address"
             name="email"
             placeholder="Enter your email"
@@ -136,7 +136,7 @@ export default function Component() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
-            className="dark:text-white text-black"
+            className="text-black"
             isRequired
             endContent={
               <button type="button" onClick={toggleVisibility}>

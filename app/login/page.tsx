@@ -89,7 +89,7 @@ export default function Component() {
             variant="bordered"
             isInvalid={isemail}
             errorMessage="Email is required"
-            className="dark:text-white text-black"
+            className="text-black"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
@@ -108,7 +108,7 @@ export default function Component() {
                 )}
               </button>
             }
-            className="dark:text-white text-black"
+            className="text-black"
             label="Password"
             name="password"
             placeholder="Enter your password"
