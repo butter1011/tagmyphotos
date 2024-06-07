@@ -39,11 +39,11 @@ const APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
  * <Sidebar defaultSelectedKey="home" selectedKeys={[currentPath]} />
  * ```
  */
-interface ImgData {
-    filename: string;
-    title: string;
-    tags: string[];
-}
+    interface ImgData {
+        filename: string;
+        title: string;
+        tags: string[];
+    }
 
 export default function Navbar() {
     const { toast } = useContext<any>(ToastContext);
@@ -86,28 +86,6 @@ export default function Navbar() {
             reader.onerror = reject;
             reader.readAsDataURL(image);
         });
-    }
-
-    // Download the CSV file
-    const generateCSV = () => {
-        let csvContent = 'data:text/csv;charset=utf-8,';
-
-        // Add column headers
-        csvContent += "FileName,Title,Tag\n";
-
-        // iterate over the arrays to form the csv content
-        for (let i = 0; i < imgdata.length; i++) {
-            csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]}\n`;
-        }
-
-        let encodedUri = encodeURI(csvContent);
-
-        let link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "my_data.csv");
-        document.body.appendChild(link);
-
-        link.click();
     }
 
     // Generate Keywards

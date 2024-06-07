@@ -2,8 +2,14 @@
 import React, { useState } from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react"
 import { useAtom } from 'jotai'
-import { DownloadModalAtom } from '../Jotai/atoms'
+import { DownloadModalAtom, ImageData } from '../Jotai/atoms'
 import { MdOutlineEdit } from "react-icons/md";
+
+interface ImgData {
+    filename: string;
+    title: string;
+    tags: string[];
+}
 
 const AdobeStockCategory = [
     "None",
@@ -83,9 +89,49 @@ const DownloadModal = () => {
     const [shutterStockEditorial, setShutterStockEditorial] = useState<any>("None");
     const [shutterStockMatureContent, setShutterStockMatureContent] = useState<any>("None");
     const [shutterStockIllustration, setShutterStockIllustration] = useState<any>("None");
+    const [imgdata, setData] = useAtom<ImgData[]>(ImageData);
 
     const onSetSetting = (value: any) => {
         setSetting(value);
+    }
+
+    // Download the CSV file
+    const generateCSV = () => {
+        let csvContent = 'data:text/csv;charset=utf-8,';
+
+        // Add column headers
+        if (setting === "Default") {
+            csvContent += "FileName,Title,Tag\n";
+            // iterate over the arrays to form the csv content
+            for (let i = 0; i < imgdata.length; i++) {
+                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]}\n`;
+            }
+        }
+
+        if (setting === "ShutterStock") {
+            csvContent += "FileName,Title,Tag,Category,Editorial,Mature Content,Illustration\n";
+            // iterate over the arrays to form the csv content
+            for (let i = 0; i < imgdata.length; i++) {
+                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]},${shutterStockCategory},${shutterStockEditorial},${shutterStockMatureContent},${shutterStockIllustration}\n`;
+            }
+        }
+
+        if (setting === "AdobeStock") {
+            csvContent += "FileName,Title,Tag,Category\n";
+            // iterate over the arrays to form the csv content
+            for (let i = 0; i < imgdata.length; i++) {
+                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]},${adobeStockCategory}\n`;
+            }
+        }
+
+        let encodedUri = encodeURI(csvContent);
+
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "my_data.csv");
+        document.body.appendChild(link);
+
+        link.click();
     }
 
     return (
@@ -121,7 +167,7 @@ const DownloadModal = () => {
                                     </Dropdown>
                                 </div>
                                 {
-                                    setting === "ShutterStock" && (
+                                    setting === "AdobeStock" && (
                                         <div className='flex flex-row gap-4 justify-between items-center text-black bg-gray-100 p-4 rounded-full mt'>
                                             <span className='text-black text-sm'>Categories</span>
                                             <Dropdown>
@@ -130,13 +176,13 @@ const DownloadModal = () => {
                                                         variant="bordered"
                                                         color='secondary'
                                                     >
-                                                        {shutterStockCategory}
+                                                        {adobeStockCategory}
                                                     </Button>
                                                 </DropdownTrigger>
                                                 <DropdownMenu aria-label="AdobeStockCategory" className='max-h-[600px] overflow-y-scroll -mt-[100px] absolute bg-white rounded-xl'>
                                                     {
-                                                        ShutterStockCategory.map((category, index) => (
-                                                            <DropdownItem key={index} onClick={() => setShutterStockCategory(category)}>{category}</DropdownItem>
+                                                        AdobeStockCategory.map((category:any, index:any) => (
+                                                            <DropdownItem key={index} onClick={() => setAdobeStockCategory(category)}>{category}</DropdownItem>
                                                         ))
                                                     }
                                                 </DropdownMenu>
@@ -145,7 +191,7 @@ const DownloadModal = () => {
                                     )
                                 }
                                 {
-                                    setting === "AdobeStock" && (
+                                    setting === "ShutterStock" && (
                                         <div className='flex flex-col gap-4'>
                                             <div className='flex flex-row gap-4 justify-between items-center text-black bg-gray-100 p-4 rounded-full mt'>
                                                 <span className='text-black text-sm'>Categories</span>
@@ -155,13 +201,13 @@ const DownloadModal = () => {
                                                             variant="bordered"
                                                             color='secondary'
                                                         >
-                                                            {adobeStockCategory}
+                                                            {shutterStockCategory}
                                                         </Button>
                                                     </DropdownTrigger>
-                                                    <DropdownMenu aria-label="AdobeStockCategory" className='max-h-[600px] overflow-y-scroll -mt-[100px] absolute bg-white rounded-xl'>
+                                                    <DropdownMenu aria-label="ShutterStockCategory" className='max-h-[600px] overflow-y-scroll -mt-[100px] absolute bg-white rounded-xl'>
                                                         {
-                                                            AdobeStockCategory.map((category, index) => (
-                                                                <DropdownItem key={index} onClick={() => setAdobeStockCategory(category)}>{category}</DropdownItem>
+                                                            ShutterStockCategory.map((category, index) => (
+                                                                <DropdownItem key={index} onClick={() => setShutterStockCategory(category)}>{category}</DropdownItem>
                                                             ))
                                                         }
                                                     </DropdownMenu>
@@ -238,7 +284,7 @@ const DownloadModal = () => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
-                                <Button color="secondary" onPress={onClose}>
+                                <Button color="secondary" onPress={() => generateCSV()}>
                                     Download
                                 </Button>
                             </ModalFooter>
