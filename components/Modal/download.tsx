@@ -136,7 +136,6 @@ const DownloadModal = () => {
 
     return (
         <div className="flex flex-col gap-2">
-            <Button onClick={() => setOpen(true)} className="max-w-fit">Open Modal</Button>
             <Modal
                 isOpen={isOpen}
                 placement="center"
