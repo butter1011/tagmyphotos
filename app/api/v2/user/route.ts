@@ -7,8 +7,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
     await connect();
     let { email } = await request.json();
     let user = await Users.findOne({ email: email });
-    console.log(email);
-    
 
     if (!user) {
       return NextResponse.json({
@@ -19,7 +17,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
     const response = NextResponse.json({
       user: user,
-      status: 200,
       headers: { "content-type": "application/json" },
     });
 

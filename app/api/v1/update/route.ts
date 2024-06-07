@@ -1,30 +1,28 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connect } from "@/libs/mongodb";
 import Users from "@/models/Users";
-const cryptoJS = require("crypto-js");
+const CryptoJS = require("crypto-js");
+
+const secrect_key = process.env.NEXT_PUBLIC_OPENAI_SECRET_KEY;
 
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     await connect();
     let data = await request.json();
-    let user = (await Users.findOne({ email: data?.email })) ?? false;
+    const encrypted = CryptoJS.DES.encrypt(
+      data?.openAPIKey,
+      secrect_key
+    ).toString();
 
-    if (!user) {
-      return NextResponse.json({
-        status: 402,
-        message: "User does not exist!",
-      });
-    }
+    await Users.updateOne(
+      { email: data?.email },
+      { $set: { key: encrypted, model: data?.model } }
+    );
 
-    // encrypt key
-    const encrypted = cryptoJS.HmacSHA1(data?.openAIAPIKey, data?.email);
-
-    user.key = encrypted;
-    user.model = data?.model;
-    const update_user = await user.save();
+    let user = await Users.findOne({ email: data?.email });
 
     const response = NextResponse.json({
-        user: update_user,
+      user: user,
       status: 200,
       headers: { "content-type": "application/json" },
     });

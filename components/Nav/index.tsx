@@ -2,7 +2,7 @@
 
 import React from "react";
 import { signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import Cookies from "universal-cookie";
 
@@ -15,9 +15,12 @@ import { verifyJwtToken } from "../../libs/auth";
 import Sidebar from "./sidebar";
 
 import { useAtom } from "jotai";
-import { ImageFiles, isGenerateKey, ImageData, UserInfo } from "../Jotai/atoms";
+import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
+const CryptoJS = require("crypto-js");
+
+const secrect_key = process.env.NEXT_PUBLIC_OPENAI_SECRET_KEY;
 const axios = require('axios');
 
 const APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
@@ -49,27 +52,26 @@ export default function Navbar() {
     const pathname = usePathname();
     const currentPath = pathname.split("/")?.[1]
     const [user, setLoggedIn] = useAtom<any>(UserInfo);
+    const [openAPIKey, setOpenAPIKey] = useAtom<any>(OpenAPIKeyAtom);
+    const [model, setModel] = useAtom<any>(OpenAIModalAtom);
 
-    let api_endpoint = "https://api.openai.com/v1/chat/completions";
-    let headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + APIKEY,
-    };
+    const descryptKey = (key: any) => {
+        var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
+        var decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+        return decryptedData;
+    }
 
-    const initLoginState = async () => {
-        const cookies = new Cookies();
-        const token = cookies.get("token");
-
-        if (token) {
-            const verifiedToken = await verifyJwtToken(token);
-            if (verifiedToken) {
-                setLoggedIn(verifiedToken);
-            }
+    // init the User info value
+    useMemo(() => {
+        if (user?.key === undefined) {
+            return;
         }
 
-        return false;
-    };
+        const decrypted = descryptKey(user?.key);
 
+        setModel(user?.model);
+        setOpenAPIKey(decrypted);
+    }, [user])
 
     // encode the image into Base64
     function encodeImage(image: File): Promise<string> {
@@ -105,6 +107,16 @@ export default function Navbar() {
 
     // Generate Keywards
     const generateKey = async () => {
+        if (!openAPIKey) {
+            return;
+        }
+
+        let api_endpoint = "https://api.openai.com/v1/chat/completions";
+        let headers = {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + openAPIKey,
+        };
+
         setLoading(true);
 
         let updateData: any = [];
@@ -116,7 +128,7 @@ export default function Navbar() {
             image_data.filename = imageFile.name;
 
             let payload = {
-                "model": "gpt-4-vision-preview",
+                "model": { model },
                 "messages": [
                     {
                         "role": "user",
@@ -167,10 +179,27 @@ export default function Navbar() {
     }
 
     useEffect(() => {
-        if (session) setLoggedIn(session?.user);
-        else {
-            initLoginState();
+        const getUserData = async (email: any) => {
+            const res = await axios.post("/api/v2/user", { email: email });
+            setLoggedIn(res?.data?.user);
         }
+
+        const initLoginState = async () => {
+            const cookies = new Cookies();
+            const token = cookies.get("token");
+
+            if (token) {
+                const verifiedToken = await verifyJwtToken(token);
+                if (verifiedToken) {
+                    getUserData(verifiedToken?.email);
+                }
+            }
+
+            if (session) getUserData(session?.user?.email);
+            return false;
+        };
+
+        initLoginState();
     }, [session])
 
     return (

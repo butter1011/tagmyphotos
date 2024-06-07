@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useAtom } from 'jotai';
 import { Spinner } from "@nextui-org/react";
 import { ToastContext } from "@/components/Contexts/ToastContext";
-import { UserInfo } from '@/components/Jotai/atoms';
+import { UserInfo, OpenAPIKeyAtom, OpenAIModalAtom } from '@/components/Jotai/atoms';
 
 export const CustomRadio = (props: any) => {
   const {
@@ -30,7 +30,7 @@ export const CustomRadio = (props: any) => {
       {...getBaseProps()}
       className={cn(
         "group inline-flex items-center hover:opacity-70 active:opacity-50 justify-between flex-row-reverse tap-highlight-transparent",
-        "max-w-[300px] cursor-pointer border-2 border-default rounded-lg gap-4 p-4",
+        "max-w-[400px] cursor-pointer border-2 border-default rounded-lg gap-4 p-4 my-4 mr-8",
         "data-[selected=true]:border-primary bg-white",
       )}
     >
@@ -43,7 +43,7 @@ export const CustomRadio = (props: any) => {
       <div {...getLabelWrapperProps()}>
         {children && <span {...getLabelProps()}>{children}</span>}
         {description && (
-          <span className="text-small text-foreground opacity-70">{description}</span>
+          <span className="text-small text-foreground opacity-70 py-2">{description}</span>
         )}
       </div>
     </Component>
@@ -55,15 +55,16 @@ const settingPage = () => {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState(new Set(["text"]));
-  const [openAPIKey, setOpenAPIKey] = React.useState<any>("");
-  const [user, setUser] = useAtom(UserInfo);
-  const [model, setModel] = useState<any>(user?.model);
+  const [user, setUser] = useAtom<any>(UserInfo);
+  const [openAPIKey, setOpenAPIKey] = useAtom<any>(OpenAPIKeyAtom);
+  const [model, setModel] = useAtom<any>(OpenAIModalAtom);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
+
 
   const SaveData = async () => {
     setLoading(true);
@@ -72,16 +73,6 @@ const settingPage = () => {
       setLoading(false);
       return;
     }
-
-    await axios.post("/api/v2/user", user?.email).then((res:any) => {
-      if (res?.status === 200) {
-        setUser(res?.data?.user);
-      }
-    }).catch(() => {
-      toast.error("Internal Server error");
-      setLoading(false);
-      return;
-    })
 
     const data = {
       email: user?.email,
@@ -94,15 +85,15 @@ const settingPage = () => {
 
       if (res?.status === 200) {
         toast.success("Successfully saved");
+        console.log(res?.data?.user);
+
         setUser(res?.data?.user);
       } else {
         toast.error("Internal Server error");
       }
 
       setLoading(false);
-      setOpenAPIKey("");
     } catch (err) {
-      setOpenAPIKey("");
       setLoading(false);
       console.log(err)
     }
@@ -149,19 +140,21 @@ const settingPage = () => {
 
           <Divider orientation='horizontal' className='m-4 w-full' />
 
-          <div className='w-full p-4'>
-            <RadioGroup label="GPT Model" defaultValue="gpt35">
-              <CustomRadio value="gpt35" onChange={() => handleRadioChange('gpt35')}>
-                GPT 3.5
-              </CustomRadio>
-              <CustomRadio value="gpt4" onChange={() => handleRadioChange('gpt4')}>
-                GPT 4.0
+          <div className='w-full p-4 justify-center'>
+            <RadioGroup label="GPT Model" defaultValue="gpt4-vision-preview" value={model} orientation='horizontal' className='w-full flex m-4'>
+              <CustomRadio
+                value="gpt4-vision-preview"
+                onChange={() => handleRadioChange('gpt4-vision-preview')}
+                description="GPT-4 model with the ability to understand images, in addition to all other GPT-4 Turbo capabilities. This is a preview model, we recommend developers to now use gpt-4-turbo which includes vision capabilities."
+              >
+                Gpt-4-vision-preview
               </CustomRadio>
               <CustomRadio
-                value="gpt4o"
-                onChange={() => handleRadioChange('gpt4o')}
+                value="gpt-4-1106-vision-preview"
+                description="GPT-4 model with the ability to understand images, in addition to all other GPT-4 Turbo capabilities. This is a preview model, we recommend developers to now use gpt-4-turbo which includes vision capabilities."
+                onChange={() => handleRadioChange('gpt-4-1106-vision-preview')}
               >
-                GPT 4o
+                Gpt-4-1106-vision-preview
               </CustomRadio>
             </RadioGroup>
           </div>

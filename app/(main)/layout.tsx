@@ -2,7 +2,6 @@
 import { NextUIProvider } from '@nextui-org/react'
 import { StoreProvider, store } from '../../components/Jotai/store';
 import { DevTools } from 'jotai-devtools';
-
 import Navbar from '@/components/Nav/index';
 
 export default function RootLayout({
