@@ -143,7 +143,7 @@ const settingPage = () => {
           <div className='w-full p-4 justify-center'>
             <RadioGroup label="GPT Model" defaultValue="gpt4-vision-preview" value={model} orientation='horizontal' className='w-full flex m-4'>
               <CustomRadio
-                value="gpt4-vision-preview"
+                value="gpt-4-vision-preview"
                 onChange={() => handleRadioChange('gpt4-vision-preview')}
                 description="GPT-4 model with the ability to understand images, in addition to all other GPT-4 Turbo capabilities. This is a preview model, we recommend developers to now use gpt-4-turbo which includes vision capabilities."
               >
