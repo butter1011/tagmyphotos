@@ -15,7 +15,7 @@ import { verifyJwtToken } from "../../libs/auth";
 import Sidebar from "./sidebar";
 
 import { useAtom } from "jotai";
-import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom } from "../Jotai/atoms";
+import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom, DownloadModalAtom } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { ToastContext } from "../Contexts/ToastContext";
@@ -58,6 +58,7 @@ export default function Navbar() {
     const [openAPIKey, setOpenAPIKey] = useAtom<any>(OpenAPIKeyAtom);
     const [model, setModel] = useAtom<any>(OpenAIModalAtom);
     const [warning, setWarning] = useState<any>(false);
+    const [isDownloadOpen, setDwonloadOpen] = useAtom<any>(DownloadModalAtom);
 
     const descryptKey = (key: any) => {
         var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
@@ -217,8 +218,8 @@ export default function Navbar() {
             <div className="relative flex h-full w-72 flex-1 flex-col border-r-small border-divider p-6">
                 <div className="flex items-center gap-4 px-2">
                     <div className="flex flex-col gap-2">
-                        <span className="text-small font-bold uppercase text-black">Keyworder</span>
-                        <span className="text-small text-gray-500">Microstock Keywording Tool</span>
+                        <span className="text-small font-bold text-black">Tag My Photos</span>
+                        <span className="text-small text-gray-500">Free Microstock Keywording Tool</span>
                     </div>
                 </div>
                 <Spacer y={12} />
@@ -241,7 +242,7 @@ export default function Navbar() {
                                 warning &&
                                 <span className="text-red-600 text-[16px] underline">Please enter API Key first</span>
                             }
-                            <Button className="px-10 shadow-md" color="secondary" radius="full" variant="shadow" onClick={generateCSV} isDisabled={!isGenerate}>
+                            <Button className="px-10 shadow-md" color="secondary" radius="full" variant="shadow" onClick={() => setDwonloadOpen(true)} >
                                 🚀 Download CSV
                             </Button>
                         </CardBody>
