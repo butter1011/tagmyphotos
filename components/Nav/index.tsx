@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import Cookies from "universal-cookie";
 
 import { Icon } from "@iconify/react";
-import Image from "next/image";
+import Link from "next/link";
 import { items } from "./sidebar-items";
 import { Avatar, Button, Card, CardBody, CardFooter, ScrollShadow, Spacer, image } from "@nextui-org/react";
 
@@ -39,11 +39,11 @@ const APIKEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
  * <Sidebar defaultSelectedKey="home" selectedKeys={[currentPath]} />
  * ```
  */
-    interface ImgData {
-        filename: string;
-        title: string;
-        tags: string[];
-    }
+interface ImgData {
+    filename: string;
+    title: string;
+    tags: string[];
+}
 
 export default function Navbar() {
     const { toast } = useContext<any>(ToastContext);
@@ -227,16 +227,18 @@ export default function Navbar() {
                     </Card>
                 </ScrollShadow>
                 <div className="mt-auto flex flex-col">
-                    <Button
-                        fullWidth
-                        className="justify-start text-default-500 data-[hover=true]:text-foreground"
-                        startContent={
-                            <Icon className="text-default-500" icon="solar:info-circle-line-duotone" width={24} />
-                        }
-                        variant="light"
-                    >
-                        Help & Information
-                    </Button>
+                    <Link href="/help">
+                        <Button
+                            fullWidth
+                            className="justify-start text-default-500 data-[hover=true]:text-foreground"
+                            startContent={
+                                <Icon className="text-default-500" icon="solar:info-circle-line-duotone" width={24} />
+                            }
+                            variant="light"
+                        >
+                            Help & Information
+                        </Button>
+                    </Link>
                     <Button
                         className="justify-start text-default-500 data-[hover=true]:text-foreground"
                         startContent={

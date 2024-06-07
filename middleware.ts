@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   if (
     !hasVerifiedToken &&
     !session &&
-    (nextUrl.pathname === "/home" || nextUrl.pathname === "/setting")
+    (nextUrl.pathname === "/home" || nextUrl.pathname === "/setting" || nextUrl.pathname === "/help")
   ) {
     const response = NextResponse.redirect(new URL("/login", url));
     response.cookies.delete("token");
