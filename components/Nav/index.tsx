@@ -116,6 +116,7 @@ export default function Navbar() {
             const base64_image = await encodeImage(imageFile);
             var image_data: any = {};
             image_data.filename = imageFile.name;
+            setData(updateData);
 
             let payload = {
                 "model": model,
@@ -148,7 +149,7 @@ export default function Navbar() {
                     image_data.title = result_entries[0];
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
-                    setData(updateData);
+
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
@@ -161,7 +162,7 @@ export default function Navbar() {
                 })
         }
         );
-        
+
         toast.error("Your API Key is invalid");
     }
 
