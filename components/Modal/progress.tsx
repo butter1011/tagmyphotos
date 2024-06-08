@@ -19,6 +19,8 @@ const GeneratingModal = (progress: any) => {
 
     useMemo(() => {
         if (files?.length !== 0) {
+            console.log(Number(progress));
+            console.log(Number(files?.length));
             console.log(Number(progress) / Number(files?.length) * 100);
             setValue(Number(progress) / Number(files?.length) * 100);
         }
