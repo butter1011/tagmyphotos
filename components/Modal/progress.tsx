@@ -18,10 +18,12 @@ const GeneratingModal = () => {
     const [value, setValue] = useState<any>(0);
 
     useEffect(() => {
+        console.log(imgdata);
+        
         if (files?.length !== 0) {
             setValue(imgdata?.length / files?.length * 100);
         }
-    }, [imgdata?.length]);
+    }, [imgdata]);
 
     return (
         <div className="flex flex-col gap-2">
