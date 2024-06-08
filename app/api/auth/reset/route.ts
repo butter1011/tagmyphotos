@@ -1,10 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connect } from "@/libs/mongodb";
 import Users from "@/models/Users";
-import sendgrid from "@sendgrid/mail";
 import { SignJWT } from "jose";
 import { getJwtSecretKey, verifyJwtToken } from "@/libs/auth";
 const bcrypt = require("bcrypt");
+
+import { Client } from "@sendgrid/client";
+const sgMail = require("@sendgrid/mail");
 
 const SENDGRID_KEY = process.env.NEXT_PUBLIC_SENDGRID_API_KEY;
 
@@ -22,8 +24,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
     }
 
     let hashedPassword = await bcrypt.hash(password, 6);
-
-    sendgrid.setApiKey(SENDGRID_KEY || "");
+    sgMail.setClient(new Client());
+    sgMail.setApiKey(SENDGRID_KEY);
 
     const token = await new SignJWT({
       email: email,
@@ -40,11 +42,11 @@ export async function POST(request: NextRequest, response: NextResponse) {
       to: email,
       from: "tagmyphotos.com",
       subject: "Password Reset",
-      text: `Hello This is the reset link. Please click this and update your password. Have a nice day.\n${verifyURL}`,
+      html: `<p>Hello This is the reset link. Please click this and update your password. Have a nice day.</p>
+      <a>${verifyURL}</a>`,
     };
 
-    console.log(msg);
-    await sendgrid.send(msg);
+    sgMail.send(msg);
 
     return NextResponse.json({
       status: 200,

@@ -11,6 +11,7 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@nextui-org/react";
 
 export default function Component() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -198,7 +199,9 @@ export default function Component() {
             </Link>
           </Checkbox>
           <Button color="primary" disabled={loading} onClick={() => onResetPassword()}>
-            Reset the Password
+            {
+              loading ? <Spinner size="sm" color="white" /> : "Reset the Password"
+            }
           </Button>
         </form>
         <p className="text-center text-small">
