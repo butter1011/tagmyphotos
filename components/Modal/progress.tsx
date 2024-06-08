@@ -11,14 +11,15 @@ interface ImgData {
     tags: string[];
 }
 
-const GeneratingModal = (progress: any) => {
+const GeneratingModal = (progress: Number) => {
     const [isOpen, setOpen] = useAtom<any>(GeneratingModalAtom);
     const [files, setFiles] = useAtom<any>(ImageFiles);
     const [value, setValue] = useState<any>(0);
 
     useMemo(() => {
         if (files?.length !== 0) {
-            setValue(progress / files?.length * 100);
+            console.log(progress);
+            setValue(Number(progress) / Number(files?.length) * 100);
         }
     }, [progress]);
 
