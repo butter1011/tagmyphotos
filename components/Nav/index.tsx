@@ -148,8 +148,6 @@ export default function Navbar() {
                     image_data.title = result_entries[0];
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
-                    console.log(updateData);
-                    
                     setData(updateData);
 
                     if (files.length == updateData.length) {
@@ -159,12 +157,12 @@ export default function Navbar() {
                     }
                 })
                 .catch((error: any) => {
+                    if (generatingModalOpen)
+                        toast.error("Your API Key is invalid");
                     setGeneratingModal(false);
                 })
         }
         );
-
-        toast.error("Your API Key is invalid");
     }
 
     const handleSignOut = async () => {
