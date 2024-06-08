@@ -21,6 +21,7 @@ const GeneratingModal = () => {
         if (files?.length !== 0) {
             setValue(imgdata?.length / files?.length * 100);
         }
+        console.log("Hello----------------------");
     }, [imgdata]);
 
     return (

@@ -149,6 +149,10 @@ export default function Navbar() {
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
                     setData(updateData);
+                    console.log("-------------------------");
+                    console.log(imgdata);
+                    
+                    
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
