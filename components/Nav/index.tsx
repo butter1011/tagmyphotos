@@ -150,7 +150,7 @@ export default function Navbar() {
                     image_data.title = result_entries[0];
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
-                    setProgress(updateData.length);
+                    setProgress(updateData.length || 0);
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
