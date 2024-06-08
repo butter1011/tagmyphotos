@@ -133,7 +133,7 @@ export default function Component() {
             <Checkbox name="remember" size="sm">
               Remember me
             </Checkbox>
-            <Link className="text-default-500" href="#" size="sm">
+            <Link className="text-default-500" href="/reset" size="sm">
               Forgot password?
             </Link>
           </div>
@@ -161,11 +161,6 @@ export default function Component() {
           Need to create an account?&nbsp;
           <Link href="/signup" size="sm">
             Sign Up
-          </Link>
-        </p>
-        <p className="text-small">
-          <Link href="/reset" size="sm">
-            Did you forget the password?&nbsp;
           </Link>
         </p>
       </div>
