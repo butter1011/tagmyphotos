@@ -7,7 +7,6 @@ import { ToastContext } from "@/components/Contexts/ToastContext";
 
 import { Button, Input, Checkbox, Link, Divider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { Spinner } from "@nextui-org/react";
 
 import Image from "next/image";
 import axios from "axios";
@@ -35,7 +34,7 @@ export default function Component() {
     setPassword("");
   }
 
-  const onSignUp = async () => {
+  const onResetPassword = async () => {
     const isPasswordValid = password === confirmPassword;
     const isEmailValid = /^\S+@\S+$/.test(email);
 
@@ -72,7 +71,7 @@ export default function Component() {
     }
 
     setLoading(true);
-    await axios.post('/api/auth/register', {
+    await axios.post('/api/auth/reset', {
       email,
       password
     }).then((res) => {
@@ -81,18 +80,18 @@ export default function Component() {
       }, 1000);
 
       if (res.data.status === 402) {
-        toast.error(res.data.message);
+        toast.error(res?.data?.message);
       }
 
       if (res.data.status === 200) {
-        toast.success(res.data.message);
+        toast.success(res?.data?.message);
         router.push("/login");
       }
     }).catch((err) => {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
-      toast.error("Some was went wrong!");
+      toast.error("Something went wrong!");
     })
   }
 
@@ -123,7 +122,7 @@ export default function Component() {
 
       {/* Sign Up Form */}
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
-        <p className="pb-2 text-xl font-medium">Sign Up</p>
+        <p className="pb-2 text-xl font-medium">Reset the Password</p>
         <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
           <Input
             isRequired
@@ -198,26 +197,10 @@ export default function Component() {
               Privacy Policy
             </Link>
           </Checkbox>
-          <Button color="primary" disabled={loading} onClick={onSignUp}>
-            {
-              loading ? <Spinner size="sm" color="white" /> : "Sign Up"
-            }
+          <Button color="primary" disabled={loading} onClick={() => onResetPassword()}>
+            Reset the Password
           </Button>
         </form>
-        <div className="flex items-center gap-4 py-2">
-          <Divider className="flex-1" />
-          <p className="shrink-0 text-tiny text-default-500">OR</p>
-          <Divider className="flex-1" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            startContent={<Icon icon="flat-color-icons:google" width={24} />}
-            variant="bordered"
-            onClick={() => signIn('google', { callbackUrl: '/feeds' })}
-          >
-            Continue with Google
-          </Button>
-        </div>
         <p className="text-center text-small">
           Already have an account?&nbsp;
           <Link href="/login" size="sm">

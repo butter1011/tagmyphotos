@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from 'next-auth/react';
 import { useContext, useState } from "react";
 import { ToastContext } from "@/components/Contexts/ToastContext";
+import { Spinner } from "@nextui-org/react";
 
 import { Button, Input, Checkbox, Link, Divider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
@@ -19,6 +20,7 @@ export default function Component() {
   const [isemail, setIsEmail] = React.useState(false);
   const [isPassword, setIsPassword] = React.useState(false);
   const { toast } = useContext<any>(ToastContext);
+  const [isLoading, setLoading] = useState<any>(false);
   const router = useRouter();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -34,6 +36,7 @@ export default function Component() {
       setPassword("");
     }
     if (email && password) {
+      setLoading(true);
       await axios.post('/api/auth/login', {
         email,
         password
@@ -41,13 +44,21 @@ export default function Component() {
         if (res.data.status === 200) {
           toast.success("Successfully logged in");
           router.push("/home")
+          setLoading(false);
+        }
+
+        if (res.data.status === 403) {
+          toast.error("Credential is not correct");
+          setLoading(false);
         }
       }).catch(() => {
         toast.error("Internal Server error");
+        setLoading(false);
       })
     } else {
       setEmail("")
       setPassword("")
+      setLoading(false);
       toast.error("Credential is not correct");
     }
   }
@@ -127,7 +138,9 @@ export default function Component() {
             </Link>
           </div>
           <Button color="primary" type="submit" onClick={() => SignInHandle()}>
-            Log In
+            {
+              isLoading ? <Spinner color="white" size="sm" /> : "Log In"
+            }
           </Button>
         </div>
         <div className="flex items-center gap-4 py-2">
@@ -148,6 +161,11 @@ export default function Component() {
           Need to create an account?&nbsp;
           <Link href="/signup" size="sm">
             Sign Up
+          </Link>
+        </p>
+        <p className="text-small">
+          <Link href="/reset" size="sm">
+            Did you forget the password?&nbsp;
           </Link>
         </p>
       </div>
