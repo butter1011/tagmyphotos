@@ -154,7 +154,7 @@ export default function Navbar() {
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
-                        setData(updateData.length)
+                        setData(updateData);
                         setGeneratingModal(false);
                         return;
                     }
