@@ -11,7 +11,7 @@ interface ImgData {
     tags: string[];
 }
 
-const GeneratingModal = (progress: Number) => {
+const GeneratingModal = (progress: any) => {
     const [isOpen, setOpen] = useAtom<any>(GeneratingModalAtom);
     const [files, setFiles] = useAtom<any>(ImageFiles);
     const [value, setValue] = useState<any>(0);
