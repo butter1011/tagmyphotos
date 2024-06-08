@@ -61,7 +61,7 @@ export default function Navbar() {
     const [warning, setWarning] = useState<any>(false);
     const [isDownloadOpen, setDwonloadOpen] = useAtom<any>(DownloadModalAtom);
     const [generatingModalOpen, setGeneratingModal] = useAtom<any>(GeneratingModalAtom);
-    const [progress, setProgress] = useState<any>(0);
+    const [progress, setProgress] = useState<Number>(0);
 
     const descryptKey = (key: any) => {
         var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
