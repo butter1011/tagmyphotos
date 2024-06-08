@@ -148,10 +148,12 @@ export default function Navbar() {
                     image_data.title = result_entries[0];
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
+                    setData(updateData);
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
                         setGeneratingModal(false);
+                        return;
                     }
                 })
                 .catch((error: any) => {
@@ -159,11 +161,6 @@ export default function Navbar() {
                 })
         }
         );
-
-        if (updateData.length > 0) {
-            setData(updateData);
-            return;
-        }
         
         toast.error("Your API Key is invalid");
     }
