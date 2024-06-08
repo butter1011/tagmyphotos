@@ -11,18 +11,16 @@ interface ImgData {
     tags: string[];
 }
 
-const GeneratingModal = () => {
+const GeneratingModal = (progress: any) => {
     const [isOpen, setOpen] = useAtom<any>(GeneratingModalAtom);
-    const [imgdata, setData] = useAtom<ImgData[]>(ImageData);
     const [files, setFiles] = useAtom<any>(ImageFiles);
     const [value, setValue] = useState<any>(0);
 
     useMemo(() => {
         if (files?.length !== 0) {
-            setValue(imgdata?.length / files?.length * 100);
+            setValue(progress / files?.length * 100);
         }
-        console.log("Hello----------------------");
-    }, [imgdata]);
+    }, [progress]);
 
     return (
         <div className="flex flex-col gap-2">

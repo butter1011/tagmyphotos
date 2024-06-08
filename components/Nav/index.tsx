@@ -19,6 +19,7 @@ import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIM
 import { Spinner } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { ToastContext } from "../Contexts/ToastContext";
+import GeneratingModal from "../Modal/progress";
 
 const CryptoJS = require("crypto-js");
 
@@ -60,6 +61,7 @@ export default function Navbar() {
     const [warning, setWarning] = useState<any>(false);
     const [isDownloadOpen, setDwonloadOpen] = useAtom<any>(DownloadModalAtom);
     const [generatingModalOpen, setGeneratingModal] = useAtom<any>(GeneratingModalAtom);
+    const [progress, setProgress] = useState<any>(0);
 
     const descryptKey = (key: any) => {
         var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
@@ -148,11 +150,7 @@ export default function Navbar() {
                     image_data.title = result_entries[0];
                     image_data.tags = result_entries.slice(1);
                     updateData.push(image_data);
-                    setData(updateData);
-                    console.log("-------------------------");
-                    console.log(imgdata);
-                    
-                    
+                    setProgress(updateData.length);
 
                     if (files.length == updateData.length) {
                         setGenerate(true);
@@ -262,6 +260,7 @@ export default function Navbar() {
                     </Button>
                 </div>
             </div>
+            <GeneratingModal progress={progress} />
         </div>
     );
 }
