@@ -40,7 +40,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
     const msg = {
       to: email,
-      from: "tagmyphotos.com",
+      from: "help@tagmyphotos.com",
       subject: "Password Reset",
       html: `<p>Hello This is the reset link. Please click this and update your password. Have a nice day.</p>
       <a>${verifyURL}</a>`,

@@ -127,7 +127,7 @@ export default function Navbar() {
                         "content": [
                             {
                                 "type": "text",
-                                "text": "I want thirty keywords to describe this image for Adobe Stock, targeted towards discoverability. Please include the ones that are relevant or location specific. Please output them comma separated. Please as the first entry, output an editorialized title, also separated by commas. Don't output any other characters.",
+                                "text": "I want 30-45 keywords to describe this image for Adobe Stock, targeted towards discoverability. The most important and relevant keywords should be listed first. Include keywords which specifically describe the image, scene, location, style, concept, theme and mood as well as synonyms and related keywords which can enhance SEO discoverability. Please output them comma separated. As the first entry please also output an editorialized and seo optimized title up to 25 words long and again loaded with the most important keywords towards the beginning of the title and including no punctuation. Only output the title and keywords and Format as follows: title, keyword, keyword, keyword etc",
                             },
                             {
                                 "type": "image_url",
