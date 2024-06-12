@@ -53,7 +53,6 @@ export default function Component() {
 
     if (!isEmailValid && email !== "") {
       toast.error("Please input the email like: example@domain.com");
-      console.log(email);
 
       initValue();
       return;

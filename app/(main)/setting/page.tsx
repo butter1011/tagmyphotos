@@ -85,7 +85,6 @@ const settingPage = () => {
 
       if (res?.status === 200) {
         toast.success("Successfully saved");
-        console.log(res?.data?.user);
 
         setUser(res?.data?.user);
       } else {

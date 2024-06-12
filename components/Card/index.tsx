@@ -17,7 +17,7 @@ const CardComponent = ({ file }: { file: File }) => {
     const [title, setTitle] = useState<any>("");
 
     useEffect(() => {
-        const data = imgdata.find(item => item["filename"] === file.name)
+        const data = imgdata?.find(item => item["filename"] === file.name)
         if (data) {
             setTag(data["tags"]);
             setTitle(data["title"]);

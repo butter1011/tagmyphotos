@@ -15,14 +15,10 @@ const GeneratingModal = (progress: any) => {
     const [isOpen, setOpen] = useAtom<any>(GeneratingModalAtom);
     const [files, setFiles] = useAtom<any>(ImageFiles);
     const [value, setValue] = useState<any>(0);
-    const [imgdata, setData] = useAtom<ImgData[]>(ImageData);
 
     useMemo(() => {
         if (files?.length !== 0) {
-            console.log((progress.progress));
-            console.log((files?.length));
-            console.log((progress.progress) / (files?.length) * 100);
-            setValue(progress.progress / (files?.length) * 100);
+            setValue((progress.progress + 1) / (files?.length) * 100);
         }
     }, [progress]);
 
