@@ -4,12 +4,13 @@ import ToastProvider from "@/components/Contexts/ToastContext";
 import { getServerSession } from "next-auth";
 import AuthProvider from "@/utils/SessionProvider";
 import "./globals.css";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Microstock Keywording Tool",
-  description: "Keyworder is a free keywording tool for microstock photographers.",
+  title: "Automatically Generate Stock Photo Titles, Tags &amp; Keywords • TagMyPhotos",
+  description: "Tag My Photos™ is a free-to-use web application to generate titles and tags for your microstock photos, illustrations &amp; ai-generated artworks.",
 };
 
 
@@ -21,7 +22,15 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className={inter.className} style={{background:"#FFF"}}>
+      <Head>
+        <meta content="[Free Tool] Generate Stock Photo Titles, Tags &amp; Keywords • TagMyPhotos" property="og:title" />
+        <meta content="Tag My Photos™ is a free-to-use web application to generate titles and tags for your microstock photos, illustrations &amp; ai-generated artworks." property="og:description" />
+        <meta content="[Free Tool] Generate Stock Photo Titles, Tags &amp; Keywords • TagMyPhotos" property="twitter:title" />
+        <meta content="Tag My Photos™ is a free-to-use web application to generate titles and tags for your microstock photos, illustrations &amp; ai-generated artworks." property="twitter:description" />
+        <meta property="og:type" content="website" />
+        <meta content="summary_large_image" name="twitter:card" />
+      </Head>
+      <body className={inter.className} style={{ background: "#FFF" }}>
         <ToastProvider>
           <AuthProvider session={session}>
             {children}

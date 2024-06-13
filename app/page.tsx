@@ -1,4 +1,3 @@
-import Image from "next/image";
 import "../public/css/normalize.css";
 import "../public/css/tag-my-photos.webflow.css";
 import "../public/css/webflow.css";
