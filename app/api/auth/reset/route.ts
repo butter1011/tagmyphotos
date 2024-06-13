@@ -36,7 +36,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       .setExpirationTime("10m")
       .sign(getJwtSecretKey());
 
-    const verifyURL = `http://localhost:3000/api/auth/reset?token=${token}`;
+    const verifyURL = `https://www.tagmyphotos.com/api/auth/reset?token=${token}`;
 
     const msg = {
       to: email,
