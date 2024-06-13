@@ -1,7 +1,6 @@
 "use client";
 
 import React, { use } from "react";
-import { signOut } from "next-auth/react";
 import { useEffect, useState, useMemo, useContext } from "react";
 import Cookies from "universal-cookie";
 
@@ -173,7 +172,6 @@ export default function Navbar() {
     const handleSignOut = async () => {
         const cookies = new Cookies();
         cookies.remove('token', { path: '/' });
-        signOut();
         localStorage.removeItem('user');
     }
 
