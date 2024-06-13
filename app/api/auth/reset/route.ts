@@ -59,12 +59,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
           <body>
               <div class="row">
                   <div class="card indigo">
-                      <img class="image1" src="./images/logo01.png">
+                      <img class="image1" src="https://www.tagmyphotos.com/images/favicon.png">
                       <hr>
                       <br>
                       <h2>Hello, We received a request to reset your password.</h2>
                       <br>
-                      <img class="image" src="./images/pc_email.png" alt="pc_email" />
+                      <img class="image" src="https://www.tagmyphotos.com/images/pc_email.png" alt="pc_email" />
                       <br>
                       <p>Forgot your password? No problem - it happens to everyone!</p>
                       <a href="${verifyURL}" class="btn btn-primary disabled" role="button" aria-disabled="true">Reset your password</a>
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
                       <li>This link will be expired within 10 minutes.</li>
                       <hr>
                       <p>Tagmyphotos
-                          <img class="image2" src="./images/logo01.png" height="30" width="30">
+                          <img class="image2" src="https://www.tagmyphotos.com/images/favicon.png" height="30" width="30">
                       </p>
                   </div>
           </body>
