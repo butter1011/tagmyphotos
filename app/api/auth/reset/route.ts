@@ -81,7 +81,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       `,
     };
 
-    sgMail.send(msg);
+    await sgMail.send(msg);
 
     return NextResponse.json({
       status: 200,
