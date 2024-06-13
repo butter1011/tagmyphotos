@@ -103,6 +103,11 @@ export default function Component() {
             errorMessage="Email is required"
             className="text-black"
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                SignInHandle();
+              }
+            }}
           />
           <Input
             endContent={
@@ -129,6 +134,11 @@ export default function Component() {
             onChange={(e) => setPassword(e.target.value)}
             errorMessage="Password is required"
             variant="bordered"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                SignInHandle();
+              }
+            }}
           />
           <div className="flex items-center justify-between px-1 py-2">
             <Checkbox name="remember" size="sm">

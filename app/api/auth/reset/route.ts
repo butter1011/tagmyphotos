@@ -163,7 +163,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
                         <img src="https://s3.eu-central-1.amazonaws.com/assets.nefentus.com/env.png" alt="env" />
                       </div>
                       <div style="padding: 12px 0 12px 4px;float: right;">
-                        <span style="color: #ebebeb; font-size: 16px;">info@tagmyphotos.com</span>
+                        <span style="color: #FFF; font-size: 16px;"> info@tagmyphotos.com </span>
                       </div>
                     </div>
                   </div>

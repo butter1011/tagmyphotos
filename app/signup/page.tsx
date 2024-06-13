@@ -108,7 +108,7 @@ export default function Component() {
       {/* Brand Logo */}
       <div className="absolute left-10 top-10">
         <div className="flex items-center gap-4">
-          <Image src="https://cdn.prod.website-files.com/img/favicon.ico" width={40} height={40} alt="" />
+          <img src="./images/favicon.png" width={40} height={40} alt="" />
           <p className="font-medium text-white">Keyworder</p>
         </div>
       </div>
@@ -134,6 +134,11 @@ export default function Component() {
             variant="bordered"
             isInvalid={isemail}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSignUp();
+              }
+            }}
           />
           <Input
             className="text-black"
@@ -160,6 +165,11 @@ export default function Component() {
             type={isVisible ? "text" : "password"}
             variant="bordered"
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSignUp();
+              }
+            }}
           />
           <Input
             className="dark:text-white text-black"
@@ -186,6 +196,11 @@ export default function Component() {
             isInvalid={isAgainPassword}
             variant="bordered"
             onChange={(e) => setConfirmPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSignUp();
+              }
+            }}
           />
           <Checkbox isRequired className="py-4" size="sm">
             I agree with the&nbsp;
