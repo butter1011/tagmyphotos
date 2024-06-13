@@ -48,7 +48,7 @@ export default function Home() {
         </div>
       </section>
       <div className="header-image-wrapper">
-        <img src="images/homepageimage.png" loading="lazy" sizes="(max-width: 1501px) 100vw, 1501px" srcset="images/homepageimage.png 500w, images/homepageimage.png 800w, images/homepageimage.png 1080w, images/homepageimage.png 1501w" alt="" class="image" />
+        <img src="images/homepageimage.png" loading="lazy" sizes="(max-width: 1501px) 100vw, 1501px" srcSet="images/homepageimage.png 500w, images/homepageimage.png 800w, images/homepageimage.png 1080w, images/homepageimage.png 1501w" alt="" className="image" />
       </div>
       <section className="footer-section m-0">
         <div>Created &amp; maintained for free by <Link href="https://brandpacks.com"><span className="underline text-blue-600">BrandPacks</span></Link> to support fellow microstock creators.
