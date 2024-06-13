@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ToastProvider from "@/components/Contexts/ToastContext";
-import { getServerSession } from "next-auth";
-import AuthProvider from "@/utils/SessionProvider";
 import "./globals.css";
 import Head from "next/head";
 
@@ -19,7 +17,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
   return (
     <html lang="en">
       <Head>
@@ -32,9 +29,7 @@ export default async function RootLayout({
       </Head>
       <body className={inter.className} style={{ background: "#FFF" }}>
         <ToastProvider>
-          <AuthProvider session={session}>
-            {children}
-          </AuthProvider>
+          {children}
         </ToastProvider>
       </body>
     </html>

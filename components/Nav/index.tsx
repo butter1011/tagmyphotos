@@ -3,7 +3,6 @@
 import React, { use } from "react";
 import { signOut } from "next-auth/react";
 import { useEffect, useState, useMemo, useContext } from "react";
-import { useSession } from "next-auth/react";
 import Cookies from "universal-cookie";
 
 import { Icon } from "@iconify/react";
@@ -48,7 +47,6 @@ interface ImgData {
 
 export default function Navbar() {
     const { toast } = useContext<any>(ToastContext);
-    const { data: session } = useSession();
     const [files, setFiles] = useAtom<any>(ImageFiles);
     const [isloading, setLoading] = useState<any>(false);
     const [imgdata, setData] = useAtom<ImgData[]>(ImageData);
@@ -196,12 +194,11 @@ export default function Navbar() {
                 }
             }
 
-            if (session) getUserData(session?.user?.email);
             return false;
         };
 
         initLoginState();
-    }, [session])
+    }, [])
 
     return (
         <div className="h-dvh">

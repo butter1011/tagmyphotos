@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import { connect } from "@/libs/mongodb";
 import { getJwtSecretKey, verifyJwtToken } from "@/libs/auth";
 
@@ -27,17 +26,11 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   //   return NextResponse.redirect(new URL("/login", url));
   // }
 
-  const session = await getToken({
-    req: request,
-    secret: process.env.NEXT_PUBLIC_JWT_SECRET_KEY,
-    raw: true,
-  });
-
   const { value: token } = cookies.get("token") ?? { value: null };
   const hasVerifiedToken = token && (await verifyJwtToken(token));
 
   if (nextUrl.pathname === "/login" || nextUrl.pathname === "/register") {
-    if (!session && !hasVerifiedToken) {
+    if (!hasVerifiedToken) {
       const response = NextResponse.next();
       response.cookies.delete("token");
       return response;
@@ -47,7 +40,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
   if (
     !hasVerifiedToken &&
-    !session &&
     (nextUrl.pathname === "/home" ||
       nextUrl.pathname === "/setting" ||
       nextUrl.pathname === "/help")

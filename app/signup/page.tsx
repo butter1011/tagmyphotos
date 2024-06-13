@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { signIn } from 'next-auth/react';
 import { useContext, useState } from "react";
 import { ToastContext } from "@/components/Contexts/ToastContext";
 
@@ -208,15 +207,6 @@ export default function Component() {
           <Divider className="flex-1" />
           <p className="shrink-0 text-tiny text-default-500">OR</p>
           <Divider className="flex-1" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            startContent={<Icon icon="flat-color-icons:google" width={24} />}
-            variant="bordered"
-            onClick={() => signIn('google', { callbackUrl: '/feeds' })}
-          >
-            Continue with Google
-          </Button>
         </div>
         <p className="text-center text-small">
           Already have an account?&nbsp;

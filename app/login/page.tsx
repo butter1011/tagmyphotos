@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from 'next-auth/react';
 import { useContext, useState } from "react";
 import { ToastContext } from "@/components/Contexts/ToastContext";
 import { Spinner } from "@nextui-org/react";
@@ -76,7 +75,9 @@ export default function Component() {
       {/* Brand Logo */}
       <div className="absolute left-10 top-10">
         <div className="flex items-center gap-4">
-          <Image src="https://cdn.prod.website-files.com/img/favicon.ico" width={40} height={40} alt="" />
+          <Link href="/" className="text-white">
+            <img src="./images/favicon.png" width={40} height={40} alt="" />
+          </Link>
           <p className="font-medium text-white">Keyworder</p>
         </div>
       </div>
@@ -147,15 +148,6 @@ export default function Component() {
           <Divider className="flex-1" />
           <p className="shrink-0 text-tiny text-default-500">OR</p>
           <Divider className="flex-1" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            startContent={<Icon icon="flat-color-icons:google" width={24} />}
-            variant="bordered"
-            onClick={() => signIn('google', { callbackUrl: '/home' })}
-          >
-            Continue with Google
-          </Button>
         </div>
         <p className="text-center text-small">
           Need to create an account?&nbsp;
