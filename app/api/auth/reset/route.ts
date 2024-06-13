@@ -6,6 +6,7 @@ import { getJwtSecretKey, verifyJwtToken } from "@/libs/auth";
 const bcrypt = require("bcrypt");
 
 import { Client } from "@sendgrid/client";
+import { title } from "process";
 const sgMail = require("@sendgrid/mail");
 
 const SENDGRID_KEY = process.env.NEXT_PUBLIC_SENDGRID_API_KEY;
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const verifyURL = `https://www.tagmyphotos.com/api/auth/reset?token=${token}`;
 
     const msg = {
+      title: "Help Center",
       to: email,
       from: "help@tagmyphotos.com",
       subject: "Password Reset",

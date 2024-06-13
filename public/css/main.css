@@ -1,0 +1,62 @@
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: whitesmoke;
+    zoom: 65%;
+}
+
+.btn {
+    font-size: 25px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    border-radius: 5px;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    padding: 40px;
+    margin: 25px;
+    width: 700px;
+    transition: all 0.3s ease-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.card p {
+    color: #a3a5ae;
+    font-size: 16px;
+}
+
+.card li {
+    color: #a3a5ae;
+    font-size: 16px;
+}
+
+.card h2 {
+    color: indigo;
+    font-size: 35px;
+}
+
+.image {
+    float: right;
+    max-width: 580px;
+    max-height: 580px;
+}
+
+.image1 {
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    display: block;
+}
+
+.time_date {
+    color: #a3a5ae;
+    font-size: 16px;
+}
