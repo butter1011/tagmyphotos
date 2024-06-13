@@ -207,11 +207,10 @@ export async function GET(request: NextRequest, response: NextResponse) {
     const password = data.password;
     const email = data.email;
 
-    // find user
-    let hashedPassword = await bcrypt.hash(password, 6);
+    // save the user
     await Users.create({
       email: email,
-      password: hashedPassword,
+      password: password,
     });
 
     return NextResponse.redirect(new URL(`/login`, request.url));
