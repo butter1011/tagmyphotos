@@ -42,75 +42,43 @@ export async function POST(request: NextRequest, response: NextResponse) {
       to: email,
       from: "help@tagmyphotos.com",
       subject: "Password Reset",
-      html: `<table class="main" width="100%">
-      <tbody>
-        <tr>
-          <td>
-            <table width="100%">
-              <tbody>
-                <tr>
-                  <td class="two-columns">
-                    <table class="column">
-                      <tbody>
-                        <tr>
-                          <td style="padding: 40px 20px 8px">
-                            <a href="https://tagmyphotos.com">
-                              <img src="./image/favicon.png" alt="" width="280" height="60">
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                </tr>
-              </tbody>
-            </table>
-            <table width="100%">
-              <tbody>
-                <tr>
-                  <td style="padding: 0px 40px 40px;text-align: center; ">
-                    <p style=" font-size:24px; font-family: Causten-Semi-Bold">Reset Password</p>
-                    <div class="styled-text">
-                      <p style="margin: 0px 0px 0px;">Hello, The system noticed that you are requesting the reset the
-                        password:</p>
-                      <p>If you want to reset your password, click the below button.</p>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table width="100%">
-              <tbody>
-                <tr>
-                  <td style="padding: 0px 60px 60px;text-align: center;">
-                    <a href="${verifyURL}" target="_blank" class="button-primary" id="dynamic-url">
-                      Conform</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table width="100%">
-              <tbody>
-                <tr>
-                  <td style="padding: 0px 60px 60px;">
-                    <div style="text-align: left;" class="styled-text">
-                      <p>Reset Password Link will be destroyed within <span><b>10 minutes.</b></span>
+      html: `
+        <!doctype html>
+          <html lang="pt-br">
+
+          <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+              <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+              <title>CAFS</title>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+              <link rel="stylesheet" href="./css/main.css" />
+          </head>
+
+          <body>
+              <div class="row">
+                  <div class="card indigo">
+                      <img class="image1" src="./images/logo01.png">
+                      <hr>
+                      <br>
+                      <h2>Hello, We received a request to reset your password.</h2>
+                      <br>
+                      <img class="image" src="./images/pc_email.png" alt="pc_email" />
+                      <br>
+                      <p>Forgot your password? No problem - it happens to everyone!</p>
+                      <a href="${verifyURL}" class="btn btn-primary disabled" role="button" aria-disabled="true">Reset your password</a>
+                      <br>
+                      <li>If you ignore this message, your password will not be changed.</li>
+                      <li>This link will be expired within 10 minutes.</li>
+                      <hr>
+                      <p>Tagmyphotos
+                          <img class="image2" src="./images/logo01.png" height="30" width="30">
                       </p>
-                      <p>Regards,<br> Tagmyphotos Team</p>
-                    </div>
-                    <p id="copyright"
-                      style="text-align: center; font-size: 14px; color: #000; font-family: Causten-Regular;">© 2024
-                      Tagmyphotos Team, All rights reserved</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>`,
+                  </div>
+          </body>
+          </html>
+      `,
     };
 
     sgMail.send(msg);
