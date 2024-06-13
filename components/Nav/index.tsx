@@ -173,6 +173,7 @@ export default function Navbar() {
         const cookies = new Cookies();
         cookies.remove('token', { path: '/' });
         localStorage.removeItem('user');
+        router.push("/");
     }
 
     useEffect(() => {
