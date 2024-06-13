@@ -85,7 +85,6 @@ export default function Component() {
 
       if (res.data.status === 200) {
         toast.success(res.data.message);
-        router.push("/login");
       }
     }).catch((err) => {
       setTimeout(() => {

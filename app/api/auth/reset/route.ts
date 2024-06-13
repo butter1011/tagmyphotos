@@ -191,7 +191,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
     return NextResponse.json({
       status: 200,
-      message: "Message Sent. Please check your mailbox!",
+      message: "Password Reset Successfully! Please check your mailbox.",
     });
   } catch (error) {
     return NextResponse.error();
