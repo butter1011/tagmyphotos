@@ -103,8 +103,17 @@ const DownloadModal = () => {
         if (setting === "Default") {
             csvContent += "FileName,Title,Tag\n";
             // iterate over the arrays to form the csv content
+
             for (let i = 0; i < imgdata.length; i++) {
-                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]}\n`;
+                let tags = "";
+                imgdata[i]["tags"].map((item: any, index: Number) => {
+                    if (index != 0) tags += ", ";
+                    tags += item;
+                })
+                console.log(tags);
+
+
+                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},"${tags}"\n`;
             }
         }
 
@@ -180,7 +189,7 @@ const DownloadModal = () => {
                                                 </DropdownTrigger>
                                                 <DropdownMenu aria-label="AdobeStockCategory" className='max-h-[600px] overflow-y-scroll -mt-[100px] absolute bg-white rounded-xl'>
                                                     {
-                                                        AdobeStockCategory.map((category:any, index:any) => (
+                                                        AdobeStockCategory.map((category: any, index: any) => (
                                                             <DropdownItem key={index} onClick={() => setAdobeStockCategory(category)}>{category}</DropdownItem>
                                                         ))
                                                     }
@@ -296,4 +305,4 @@ const DownloadModal = () => {
     )
 }
 
-export default DownloadModal
+export default DownloadModal G
