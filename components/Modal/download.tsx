@@ -110,9 +110,7 @@ const DownloadModal = () => {
                     if (index != 0) tags += ", ";
                     tags += item;
                 })
-                console.log(tags);
-
-
+                
                 csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},"${tags}"\n`;
             }
         }
@@ -121,15 +119,28 @@ const DownloadModal = () => {
             csvContent += "FileName,Title,Tag,Category,Editorial,Mature Content,Illustration\n";
             // iterate over the arrays to form the csv content
             for (let i = 0; i < imgdata.length; i++) {
-                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]},${shutterStockCategory},${shutterStockEditorial},${shutterStockMatureContent},${shutterStockIllustration}\n`;
+                let tags = "";
+                imgdata[i]["tags"].map((item: any, index: Number) => {
+                    if (index != 0) tags += ", ";
+                    tags += item;
+                })
+
+                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},"${tags}",${shutterStockCategory},${shutterStockEditorial},${shutterStockMatureContent},${shutterStockIllustration}\n`;
             }
         }
 
         if (setting === "AdobeStock") {
             csvContent += "FileName,Title,Tag,Category\n";
+
             // iterate over the arrays to form the csv content
             for (let i = 0; i < imgdata.length; i++) {
-                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},${imgdata[i]["tags"]},${adobeStockCategory}\n`;
+                let tags = "";
+                imgdata[i]["tags"].map((item: any, index: Number) => {
+                    if (index != 0) tags += ", ";
+                    tags += item;
+                })
+
+                csvContent += `${imgdata[i]["filename"]},${imgdata[i]["title"]},"${tags}",${adobeStockCategory}\n`;
             }
         }
 
@@ -305,4 +316,4 @@ const DownloadModal = () => {
     )
 }
 
-export default DownloadModal G
+export default DownloadModal 
