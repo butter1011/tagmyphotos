@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useMemo } from 'react'
 
 import { Button, Input } from "@nextui-org/react";
 import { Divider, RadioGroup, Radio, useRadio, VisuallyHidden, cn } from "@nextui-org/react";
@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useAtom } from 'jotai';
 import { Spinner } from "@nextui-org/react";
 import { ToastContext } from "@/components/Contexts/ToastContext";
-import { UserInfo, OpenAPIKeyAtom, OpenAIModalAtom } from '@/components/Jotai/atoms';
+import { UserInfo, OpenAPIKeyAtom, OpenAIModalAtom, OpenAPIKeyError } from '@/components/Jotai/atoms';
 
 const CustomRadio = (props: any) => {
   const {
@@ -58,13 +58,13 @@ const settingPage = () => {
   const [user, setUser] = useAtom<any>(UserInfo);
   const [openAPIKey, setOpenAPIKey] = useAtom<any>(OpenAPIKeyAtom);
   const [model, setModel] = useAtom<any>(OpenAIModalAtom);
+  const [isErrorKey, setErrorKey] = useAtom<any>(OpenAPIKeyError);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
-
 
   const SaveData = async () => {
     setLoading(true);
@@ -81,6 +81,8 @@ const settingPage = () => {
     }
 
     try {
+      setErrorKey(false);
+
       const res = await axios.post("/api/v1/update", data);
 
       if (res?.status === 200) {
@@ -124,6 +126,8 @@ const settingPage = () => {
                 </button>
               }
               type={isVisible ? "text" : "password"}
+              isInvalid={isErrorKey}
+              errorMessage="API Key is Invalid"
               className="w-2/3"
               value={openAPIKey}
               onChange={(e) => setOpenAPIKey(e.target.value)}

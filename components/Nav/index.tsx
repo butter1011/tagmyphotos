@@ -15,9 +15,9 @@ import { verifyJwtToken } from "../../libs/auth";
 import Sidebar from "./sidebar";
 
 import { useAtom } from "jotai";
-import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom, DownloadModalAtom, GeneratingModalAtom } from "../Jotai/atoms";
+import { ImageFiles, isGenerateKey, ImageData, UserInfo, OpenAPIKeyAtom, OpenAIModalAtom, DownloadModalAtom, GeneratingModalAtom, OpenAPIKeyError } from "../Jotai/atoms";
 import { Spinner } from "@nextui-org/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ToastContext } from "../Contexts/ToastContext";
 import GeneratingModal from "../Modal/progress";
 
@@ -62,6 +62,8 @@ export default function Navbar() {
     const [isDownloadOpen, setDwonloadOpen] = useAtom<any>(DownloadModalAtom);
     const [generatingModalOpen, setGeneratingModal] = useAtom<any>(GeneratingModalAtom);
     const [progress, setProgress] = useState<any>(0);
+    const [isErrorKey, setErrorKey] = useAtom<any>(OpenAPIKeyError);
+    const router = useRouter();
 
     const descryptKey = (key: any) => {
         var bytes = CryptoJS.DES.decrypt(user?.key, secrect_key);
@@ -95,6 +97,7 @@ export default function Navbar() {
     const generateKey = async () => {
         if (openAPIKey === "" || openAPIKey === undefined) {
             setWarning(true);
+            router.push("/setting");
             return;
         }
 
@@ -159,9 +162,10 @@ export default function Navbar() {
                         return;
                     }
                 })
-                .catch((error: any) => {
-                    if (generatingModalOpen)
-                        toast.error("Your API Key is invalid");
+                .catch(async (error: any) => {
+                    // if (generatingModalOpen)
+                    router.push("/setting")
+                    setErrorKey(true);
                     setGeneratingModal(false);
                 })
         }
