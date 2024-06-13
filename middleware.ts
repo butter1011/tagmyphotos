@@ -35,9 +35,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
   const { value: token } = cookies.get("token") ?? { value: null };
   const hasVerifiedToken = token && (await verifyJwtToken(token));
-  if (nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/home", url));
-  }
 
   if (nextUrl.pathname === "/login" || nextUrl.pathname === "/register") {
     if (!session && !hasVerifiedToken) {

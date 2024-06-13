@@ -1,113 +1,59 @@
 import Image from "next/image";
+import "../public/css/normalize.css";
+import "../public/css/tag-my-photos.webflow.css";
+import "../public/css/webflow.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      <section className="nav-bar">
+        <div className="logo-wrapper">
+          <div className="logotype">Tag My Photos™</div>
+          <div className="tagline">Free Microstock Keywording Tool</div>
         </div>
+        <Link href="/login">
+          <button className="button login ">Login</button>
+        </Link>
+      </section>
+      <section className="header">
+        <div className="w-layout-blockcontainer container w-container">
+          <h1 className="heading" id="free">The <span className="underline" >FREE</span><span>*</span> Way to Generate Titles &amp; Tags for Stock Photos</h1>
+          <p className="sub-headline">Tag My Photos™ is a free-to-use web application to generate titles and tags for your microstock photos, illustrations &amp; ai-generated artworks.</p>
+          <div className="w-full justify-center my-4 p-2">
+            <Link href="/signup" className="button text-white register_free">Register FREE</Link>
+          </div>
+        </div>
+        <div>*Requires your own OpenAI API key</div>
+        <div className="how-it-works">
+          <h1 className="heading-2"><span className="highlight">How It Works</span></h1>
+          <div id="w-node-ae4dbe44-8641-9f7a-d37e-308d5099b347-f76535e8" className="w-layout-layout quick-stack wf-layout-layout">
+            <div id="w-node-ae4dbe44-8641-9f7a-d37e-308d5099b348-f76535e8" className="w-layout-cell cell">
+              <h1 className="step-title">1. Create an Account</h1>
+              <p>Create a free account on Tag My Photos. It&#x27;s completely free and only requires an email address.</p>
+            </div>
+            <div id="w-node-ae4dbe44-8641-9f7a-d37e-308d5099b349-f76535e8" className="w-layout-cell cell">
+              <h1 className="step-title">2. Enter Your OpenAi API Key</h1>
+              <p>Navigate to the settings page and paste in your own OpenAI API key. Don&#x27;t have one?
+                <Link href="https://platform.openai.com/api-keys" target="_blank" className="link">
+                  <span className="underline mx-1">Get one here</span>
+                </Link>.
+              </p>
+            </div>
+            <div id="w-node-e1226139-d078-bc27-e030-3d376f567f41-f76535e8" className="w-layout-cell cell">
+              <h1 className="step-title">3. Generate &amp; Export Keywords</h1>
+              <p>Once your API key is saved, you can begin generating titles &amp; keywords for your stock photos and export them in a handy CSV.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="header-image-wrapper">
+        <img src="images/homepageimage.png" loading="lazy" sizes="(max-width: 1501px) 100vw, 1501px" srcset="images/homepageimage.png 500w, images/homepageimage.png 800w, images/homepageimage.png 1080w, images/homepageimage.png 1501w" alt="" class="image" />
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <section className="footer-section m-0">
+        <div>Created &amp; maintained for free by <Link href="https://brandpacks.com"><span className="underline text-blue-600">BrandPacks</span></Link> to support fellow microstock creators.
+        </div>
+      </section>
+    </>
   );
 }
