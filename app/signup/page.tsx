@@ -54,19 +54,16 @@ export default function Component() {
       toast.error("Please input the email like: example@domain.com");
       console.log(email);
 
-      initValue();
       return;
     }
 
     if (!isPasswordValid) {
       toast.error("Passwords do not match");
-      initValue();
       return;
     }
 
     if (password.length < 8 && password !== "") {
       toast.error("Password is too weak");
-      initValue();
       return;
     }
 
@@ -85,6 +82,7 @@ export default function Component() {
 
       if (res.data.status === 200) {
         toast.success(res.data.message);
+        initValue();
       }
     }).catch((err) => {
       setTimeout(() => {
@@ -211,7 +209,11 @@ export default function Component() {
               Privacy Policy
             </Link>
           </Checkbox>
-          <Button color="primary" disabled={loading} onClick={onSignUp}>
+          <Button color="primary" disabled={loading} onClick={onSignUp} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSignUp();
+              }
+            }}>
             {
               loading ? <Spinner size="sm" color="white" /> : "Sign Up"
             }

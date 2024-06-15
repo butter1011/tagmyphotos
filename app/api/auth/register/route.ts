@@ -53,7 +53,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
 
-            <title>Password Reset</title>
+            <title>Welcome to visit our website.</title>
             <style type="text/css">
               * {
                 box-sizing: border-box;

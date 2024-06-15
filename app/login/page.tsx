@@ -148,7 +148,11 @@ export default function Component() {
               Forgot password?
             </Link>
           </div>
-          <Button color="primary" type="submit" onClick={() => SignInHandle()}>
+          <Button color="primary" type="submit" onClick={() => SignInHandle()} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                SignInHandle();
+              }
+            }}>
             {
               isLoading ? <Spinner color="white" size="sm" /> : "Log In"
             }
