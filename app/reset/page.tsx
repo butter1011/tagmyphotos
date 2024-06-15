@@ -72,16 +72,14 @@ export default function Component() {
       email,
       password
     }).then((res) => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-
       if (res.data.status === 402) {
         toast.error(res?.data?.message);
+        setLoading(false);
       }
 
       if (res.data.status === 200) {
         toast.success(res?.data?.message);
+        setLoading(false);
         initValue();
         router.push("/login");
       }
@@ -124,6 +122,7 @@ export default function Component() {
         <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
           <Input
             isRequired
+            disabled={loading}
             className="text-black"
             label="Email Address"
             name="email"
@@ -141,6 +140,7 @@ export default function Component() {
           <Input
             className="text-black"
             isRequired
+            disabled={loading}
             endContent={
               <button type="button" onClick={toggleVisibility}>
                 {isVisible ? (
@@ -172,6 +172,7 @@ export default function Component() {
           <Input
             className="dark:text-white text-black"
             isRequired
+            disabled={loading}
             endContent={
               <button type="button" onClick={toggleConfirmVisibility}>
                 {isConfirmVisible ? (
@@ -200,7 +201,7 @@ export default function Component() {
               }
             }}
           />
-          <Checkbox isRequired className="py-4" size="sm">
+          <Checkbox isRequired className="py-4" size="sm" disabled={loading}>
             I agree with the&nbsp;
             <Link href="#" size="sm">
               Terms

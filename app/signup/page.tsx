@@ -72,16 +72,15 @@ export default function Component() {
       email,
       password
     }).then((res) => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
 
       if (res.data.status === 402) {
         toast.error(res.data.message);
+        setLoading(false);
       }
 
       if (res.data.status === 200) {
         toast.success(res.data.message);
+        setLoading(false);
         initValue();
       }
     }).catch((err) => {
@@ -124,6 +123,7 @@ export default function Component() {
           <Input
             isRequired
             className="text-black"
+            disabled={loading}
             label="Email Address"
             name="email"
             placeholder="Enter your email"
@@ -157,6 +157,7 @@ export default function Component() {
             }
             label="Password"
             name="password"
+            disabled={loading}
             isInvalid={isPassword}
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
@@ -171,6 +172,7 @@ export default function Component() {
           <Input
             className="dark:text-white text-black"
             isRequired
+            disabled={loading}
             endContent={
               <button type="button" onClick={toggleConfirmVisibility}>
                 {isConfirmVisible ? (
@@ -199,7 +201,7 @@ export default function Component() {
               }
             }}
           />
-          <Checkbox isRequired className="py-4" size="sm">
+          <Checkbox isRequired className="py-4" size="sm" disabled={loading}>
             I agree with the&nbsp;
             <Link href="#" size="sm">
               Terms
@@ -209,11 +211,7 @@ export default function Component() {
               Privacy Policy
             </Link>
           </Checkbox>
-          <Button color="primary" disabled={loading} onClick={onSignUp} onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                onSignUp();
-              }
-            }}>
+          <Button color="primary" disabled={loading} onClick={onSignUp}>
             {
               loading ? <Spinner size="sm" color="white" /> : "Sign Up"
             }

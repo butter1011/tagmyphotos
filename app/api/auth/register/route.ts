@@ -169,7 +169,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
                 </div>
 
                 <div style=" padding: 24px;">
-                  <h1 class="center" style="font-size: 32px; color: #f6f6f6; font-weight: 400;">Password Reset</h1>
+                  <h1 class="center" style="font-size: 32px; color: #f6f6f6; font-weight: 400;">Welcome to visit our website.</h1>
                   <a href="${verifyURL}">
                     <div class="btn-confirm" style="margin: 36px auto;">Verify Email</div>
                   </a>
