@@ -100,7 +100,7 @@ export default function Component() {
             type="email"
             variant="bordered"
             isInvalid={isemail}
-            disabled={loading}
+            disabled={isLoading}
             errorMessage="Email is required"
             className="text-black"
             onChange={(e) => setEmail(e.target.value)}
@@ -126,7 +126,7 @@ export default function Component() {
                 )}
               </button>
             }
-            disabled={loading}
+            disabled={isLoading}
             className="text-black"
             label="Password"
             name="password"
