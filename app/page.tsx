@@ -11,8 +11,8 @@ export default function Home() {
           <div className="logotype">Tag My Photos™</div>
           <div className="tagline">Free Microstock Keywording Tool</div>
         </div>
-        <Link href="/login">
-          <button className="button login ">Login</button>
+        <Link href="/home">
+          <button className="button login ">Tag My Photos</button>
         </Link>
       </section>
       <section className="header">
