@@ -52,21 +52,17 @@ export default function Component() {
 
     if (!isEmailValid && email !== "") {
       toast.error("Please input the email like: example@domain.com");
-      console.log(email);
 
-      initValue();
       return;
     }
 
     if (!isPasswordValid) {
       toast.error("Passwords do not match");
-      initValue();
       return;
     }
 
     if (password.length < 8 && password !== "") {
       toast.error("Password is too weak");
-      initValue();
       return;
     }
 
@@ -85,6 +81,8 @@ export default function Component() {
 
       if (res.data.status === 200) {
         toast.success(res.data.message);
+        initValue();
+        router.push("/login");
       }
     }).catch((err) => {
       setTimeout(() => {
