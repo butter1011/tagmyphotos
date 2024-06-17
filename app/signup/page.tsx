@@ -38,39 +38,27 @@ export default function Component() {
     const isPasswordValid = password === confirmPassword;
     const isEmailValid = /^\S+@\S+$/.test(email);
 
-    if (email == "") {
-      setIsEmail(false);
-    }
-
-    if (password == "") {
-      setIsPassword(false);
-    }
-
-    if (confirmPassword == "") {
-      setisAgainPassword(false);
-    }
-
     if (!isEmailValid && email !== "") {
       toast.error("Please input the email like: example@domain.com");
+      setIsEmail(true);
+      setIsPassword(false);
+      setisAgainPassword(false);
+      return;
+    }
+
+    if (!isPasswordValid) {
+      toast.error("Passwords do not match");
       setIsEmail(false);
       setIsPassword(true);
       setisAgainPassword(true);
       return;
     }
 
-    if (!isPasswordValid) {
-      toast.error("Passwords do not match");
-      setIsEmail(true);
-      setIsPassword(false);
-      setisAgainPassword(false);
-      return;
-    }
-
     if (password.length < 8 && password !== "") {
       toast.error("Password is too weak");
-      setIsEmail(true);
-      setIsPassword(false);
-      setisAgainPassword(false);
+      setIsEmail(false);
+      setIsPassword(true);
+      setisAgainPassword(true);
       return;
     }
 
@@ -87,6 +75,7 @@ export default function Component() {
 
       if (res.data.status === 200) {
         toast.success(res.data.message);
+        setLoading(false);
         initValue();
       }
     }).catch((err) => {
