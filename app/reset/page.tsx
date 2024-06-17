@@ -53,17 +53,25 @@ export default function Component() {
 
     if (!isEmailValid && email !== "") {
       toast.error("Please input the email like: example@domain.com");
-
+      setIsEmail(true);
+      setIsPassword(false);
+      setisAgainPassword(false);
       return;
     }
 
     if (!isPasswordValid) {
       toast.error("Passwords do not match");
+      setIsEmail(false);
+      setIsPassword(true);
+      setisAgainPassword(true);
       return;
     }
 
     if (password.length < 8 && password !== "") {
       toast.error("Password is too weak");
+      setIsEmail(false);
+      setIsPassword(true);
+      setisAgainPassword(true);
       return;
     }
 
