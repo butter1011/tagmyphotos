@@ -100,6 +100,7 @@ export default function Component() {
             type="email"
             variant="bordered"
             isInvalid={isemail}
+            disabled={isLoading}
             errorMessage="Email is required"
             className="text-black"
             onChange={(e) => setEmail(e.target.value)}
@@ -125,6 +126,7 @@ export default function Component() {
                 )}
               </button>
             }
+            disabled={isLoading}
             className="text-black"
             label="Password"
             name="password"
@@ -141,7 +143,7 @@ export default function Component() {
             }}
           />
           <div className="flex items-center justify-between px-1 py-2">
-            <Checkbox name="remember" size="sm">
+            <Checkbox name="remember" size="sm" >
               Remember me
             </Checkbox>
             <Link className="text-default-500" href="/reset" size="sm">
